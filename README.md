@@ -1,8 +1,11 @@
-[![Build Status](https://travis-ci.org/walcony/letsencrypt-cloudflare-hook.svg?branch=master)](https://travis-ci.org/walcony/letsencrypt-cloudflare-hook) [![Requirements Status](https://requires.io/github/walcony/letsencrypt-cloudflare-hook/requirements.svg?branch=master)](https://requires.io/github/walcony/letsencrypt-cloudflare-hook/requirements/?branch=master)
-
 # CloudFlare hook for `dehydrated`
 
 This is a hook for the [Let's Encrypt](https://letsencrypt.org/) ACME client [dehydrated](https://github.com/lukas2511/dehydrated) (previously known as `letsencrypt.sh`) that allows you to use [CloudFlare](https://www.cloudflare.com/) DNS records to respond to `dns-01` challenges. Requires Python and your CloudFlare account e-mail and API key being in the environment.
+
+| CI / CD / Tools | Badge |
+| --------------- | ----- |
+| Travis | [![Build Status](https://travis-ci.org/walcony/letsencrypt-cloudflare-hook.svg?branch=master)](https://travis-ci.org/walcony/letsencrypt-cloudflare-hook) |
+| Requires.io | [![Requirements Status](https://requires.io/github/walcony/letsencrypt-cloudflare-hook/requirements.svg?branch=master)](https://requires.io/github/walcony/letsencrypt-cloudflare-hook/requirements/?branch=master) |
 
 ## Installation
 
@@ -15,8 +18,10 @@ $ git clone https://github.com/walcony/letsencrypt-cloudflare-hook hooks/cloudfl
 ```
 
 If you are using Python 3:
-```
-$ pip install -r hooks/cloudflare/requirements.txt
+```shell
+$ python3 -m venv env # Only first time
+$ source env/bin/activate
+$ (env) pip install -r hooks/cloudflare/requirements.txt
 ```
 
 Otherwise, if you are using Python 2 (make sure to also check the [urllib3 documentation](http://urllib3.readthedocs.org/en/latest/security.html#installing-urllib3-with-sni-support-and-certificates) for possible caveats):
@@ -75,7 +80,7 @@ echo "export CF_DEBUG=true" >> config
 ## Usage
 
 ```
-$ ./dehydrated -c -d example.com -t dns-01 -k 'hooks/cloudflare/hook.py'
+$ (env) ./dehydrated -c -d example.com -t dns-01 -k 'hooks/cloudflare/hook.py'
 #
 # !! WARNING !! No main config file found, using default config!
 #
