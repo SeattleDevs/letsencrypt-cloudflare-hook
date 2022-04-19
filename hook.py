@@ -54,6 +54,14 @@ try:
 except KeyError:
     dns_servers = False
 
+try:
+    domain_mappings = {}
+    for mapping in os.environ['CF_DOMAIN_MAPPINGS'].split(':'):
+        domain, zone = mapping.split('=')
+        domain_mappings[domain] = zone
+except KeyError:
+    domain_mappings = {}
+
 
 def _has_dns_propagated(name, token):
     try:
@@ -102,6 +110,8 @@ def create_txt_record(args):
     domain, challenge, token = args
     logger.debug(' + Creating TXT record: {0} => {1}'.format(domain, token))
     logger.debug(' + Challenge: {0}'.format(challenge))
+    if domain in domain_mappings.keys():
+        domain = domain_mappings[domain]
     zone_id = _get_zone_id(domain)
     name = "{0}.{1}".format('_acme-challenge', domain)
     
@@ -130,6 +140,8 @@ def delete_txt_record(args):
         logger.info(" + http_request() error in letsencrypt.sh?")
         return
 
+    if domain in domain_mappings.keys():
+        domain = domain_mappings[domain]
     zone_id = _get_zone_id(domain)
     name = "{0}.{1}".format('_acme-challenge', domain)
     record_id = _get_txt_record_id(zone_id, name, token)
@@ -170,6 +182,8 @@ def create_all_txt_records(args):
     time.sleep(10)
     for i in range(0, len(args), X):
         domain, token = args[i], args[i+2]
+        if domain in domain_mappings.keys():
+            domain = domain_mappings[domain]
         name = "{0}.{1}".format('_acme-challenge', domain)
         while(_has_dns_propagated(name, token) == False):
             logger.info(" + DNS not propagated, waiting 30s...")
