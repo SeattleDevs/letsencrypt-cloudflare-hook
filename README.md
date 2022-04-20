@@ -45,6 +45,11 @@ If you want more information about what is going on while the hook is running:
 $ export CF_DEBUG='true'
 ```
 
+In cases where you have [ACME records delegated from other domains](https://www.eff.org/deeplinks/2018/02/technical-deep-dive-securing-automation-acme-dns-challenge-validation) to a domain managed by CloudFlare, you can map them accordingly with the `CF_DOMAIN_MAPPINGS` variable:
+```
+$ export CF_DOMAIN_MAPPINGS='noncloudflaredoma.in=cloudflaredomain.net someothersite.com=cloudflaredomain.net'
+```
+
 Alternatively, these statements can be placed in `dehydrated/config`, which is automatically sourced by `dehydrated` on startup:
 
 ```
