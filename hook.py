@@ -56,7 +56,7 @@ except KeyError:
 
 try:
     domain_mappings = {}
-    for mapping in os.environ['CF_DOMAIN_MAPPINGS'].split(':'):
+    for mapping in os.environ['CF_DOMAIN_MAPPINGS'].split():
         domain, zone = mapping.split('=')
         domain_mappings[domain] = zone
 except KeyError:
