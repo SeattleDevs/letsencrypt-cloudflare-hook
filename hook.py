@@ -52,18 +52,25 @@ try:
     dns_servers = os.environ['CF_DNS_SERVERS']
     dns_servers = dns_servers.split()
 except KeyError:
-    dns_servers = False
+    dns_servers = None
 
+if dns_servers is not None:
+    resolver = dns.resolver.Resolver()
+    resolver.nameservers = dns_servers
+else:
+    resolver = dns.resolver
+
+def _get_cname(name):
+    try:
+        dns_response = resolver.resolve(name, 'CNAME')
+    except dns.exception.DNSException:
+        return None
+
+    return list(dns_response)[0].to_text()
 
 def _has_dns_propagated(name, token):
     try:
-        if dns_servers:
-            custom_resolver = dns.resolver.Resolver()
-            custom_resolver.nameservers = dns_servers
-            dns_response = custom_resolver.resolve(name, 'TXT')
-        else:
-            dns_response = dns.resolver.resolve(name, 'TXT')
-
+        dns_response = resolver.resolve(name, 'TXT')
         for rdata in dns_response:
             if token in [b.decode('utf-8') for b in rdata.strings]:
                 return True
@@ -73,9 +80,12 @@ def _has_dns_propagated(name, token):
 
     return False
 
-
 # https://api.cloudflare.com/#zone-list-zones
 def _get_zone_id(domain):
+    cname = _get_cname(domain)
+    if cname is not None:
+        domain = cname
+
     tld = get_fld('http://' + domain)
     url = "https://api.cloudflare.com/client/v4/zones?name={0}".format(tld)
     for auth in CF_HEADERS:
