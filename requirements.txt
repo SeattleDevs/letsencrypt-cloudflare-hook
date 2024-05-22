@@ -1,6 +1,6 @@
 dnspython==2.6.1
 future==1.0.0
-requests==2.31.0
+requests==2.32.2
 six==1.16.0
 testresources==2.0.1
 tld==0.13
