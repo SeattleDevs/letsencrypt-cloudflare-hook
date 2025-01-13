@@ -1,4 +1,4 @@
-# CloudFlare hook for `dehydrated`
+# CloudFlare hook for dehydrated
 
 This is a hook for the [Let's Encrypt](https://letsencrypt.org/) ACME client [dehydrated](https://github.com/dehydrated-io/dehydrated) that allows you to use [CloudFlare](https://www.cloudflare.com/) DNS records to respond to `dns-01` challenges. This script requires Python and as well as your CloudFlare account e-mail and API key (as environment variables).
 
@@ -13,7 +13,7 @@ This is a hook for the [Let's Encrypt](https://letsencrypt.org/) ACME client [de
 ## System Prerequisites
 
 - Python 3.x
-- pip (Python package installer)
+- pip
 - git
 
 ### WSL, Ubuntu, and potentially Debian prerequisites
@@ -27,7 +27,7 @@ sudo apt install python3-pip python-is-python3
 ## Installation and usage without a Python virtual environment
 It is highly recommanded to use Python Virtual Environmnets instead of the installation and usage steps in this section.  See [Installation with Python virtual envs and bash script for quick re-runs](#installation-with-python-virtual-envs-and-bash-script-for-quick-re-runs) for more information.
 
-
+Clone the code repo:
 ```
 $ cd ~
 $ git clone https://github.com/dehydrated-io/dehydrated
@@ -36,7 +36,7 @@ $ mkdir hooks
 $ git clone https://github.com/SeattleDevs/letsencrypt-cloudflare-hook hooks/cloudflare
 ```
 
-Using Python 3:
+Install required python packages:
 ```
 $ pip3 install -r hooks/cloudflare/requirements.txt
 ```
@@ -53,7 +53,7 @@ An API token from your Cloudflare account is required. If you are currently usin
 -  It is highly recommended to limit the API access to your IP address or subnet using the Client IP Address Filtering
 -  Once you have completed the above steps, press the "Continue to summary" button and then "Create Token."
 
-Your account's CloudFlare email and API key are expected to be in the environment, so make sure to:
+Your account's CloudFlare email and API key are expected to be in the environment, you can set the enviornment variable if you need to in bash using:
 
 ```
 $ export CF_API_TOKEN='zzle8imobfxpg50sdb3c'
@@ -190,6 +190,7 @@ $ cd ~/cert_workspace/dehydrated
 $ git pull
 $ cd hooks/cloudflare
 $ git pull
+$ cd ../..
 $ source dehydrated_env/bin/activate
 $ (dehydrated_env) pip3 install -r hooks/cloudflare/requirements.txt
 ```
@@ -215,7 +216,7 @@ $ (dehydrated_env) tox
 ### Integration Testing
 If you are making changes to the code, you can do a full test with real calls through dehydrated and Let's Encrypt's test servers. The test servers won't issue a valid certificate, but have a higher rate limit which allows you to test your hook changes without using up your production quota.
 
-If you haven't used Let's Encrypt's test server before, you will need to accept its terms of service. Assuming you are aware of the terms and would like to accept them, you can do so using the following command:
+1. If you haven't used Let's Encrypt's test server before, you will need to accept its terms of service. Assuming you are aware of the terms and would like to accept them, you can do so using the following command:
 ```
 $ ./dehydrated --register --accept-terms --ca letsencrypt-test
 ```
