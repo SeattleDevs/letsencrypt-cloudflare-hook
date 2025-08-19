@@ -7,8 +7,7 @@ on:
     branches: [ "master" ]
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 jobs:
   test:
@@ -18,7 +17,7 @@ jobs:
         python-version: ["3.10", "3.11", "3.12", "3.13"]
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
       with:
@@ -36,8 +35,11 @@ jobs:
     needs: test
     if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Enable automerge for Dependabot PRs
         shell: bash
         env:
