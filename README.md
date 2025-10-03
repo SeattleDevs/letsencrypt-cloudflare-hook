@@ -25,7 +25,7 @@ sudo apt install python3-pip python-is-python3
 
 
 ## Installation and usage without a Python virtual environment
-It is highly recommanded to use Python Virtual Environmnets instead of the installation and usage steps in this section.  See [Installation with Python virtual envs and bash script for quick re-runs](#installation-with-python-virtual-envs-and-bash-script-for-quick-re-runs) for more information.
+It is highly recommended to use Python Virtual Environments instead of the installation and usage steps in this section.  See [Installation with Python virtual envs and bash script for quick re-runs](#installation-with-python-virtual-envs-and-bash-script-for-quick-re-runs) for more information.
 
 Clone the code repo:
 ```
@@ -38,7 +38,7 @@ $ git clone https://github.com/SeattleDevs/letsencrypt-cloudflare-hook hooks/clo
 
 Install required python packages:
 ```
-$ pip3 install -r hooks/cloudflare/requirements.txt
+$ pip install -r hooks/cloudflare/requirements.txt
 ```
 
 
@@ -53,7 +53,7 @@ An API token from your Cloudflare account is required. If you are currently usin
 -  It is highly recommended to limit the API access to your IP address or subnet using the Client IP Address Filtering
 -  Once you have completed the above steps, press the "Continue to summary" button and then "Create Token."
 
-Your account's CloudFlare email and API key are expected to be in the environment, you can set the enviornment variable if you need to in bash using:
+Your account's CloudFlare email and API key are expected to be in the environment, you can set the environment variable if you need to in bash using:
 
 ```
 $ export CF_API_TOKEN='zzle8imobfxpg50sdb3c'
@@ -141,7 +141,7 @@ Activate the virtual env and install dependencies:
 
 ```
 source dehydrated_env/bin/activate 
-$ (dehydrated_env) pip3 install -r hooks/cloudflare/requirements.txt
+$ (dehydrated_env) pip install -r hooks/cloudflare/requirements.txt
 ```
 
 ### Usage with a bash script
@@ -192,16 +192,17 @@ $ cd hooks/cloudflare
 $ git pull
 $ cd ../..
 $ source dehydrated_env/bin/activate
-$ (dehydrated_env) pip3 install -r hooks/cloudflare/requirements.txt
+$ (dehydrated_env) pip install -r hooks/cloudflare/requirements.txt
 ```
 
-and then re-generate your certifcate as before:
+NOTE: To clean up older dependencies installed by pip, run `pip freeze | xargs pip uninstall -y` in your (virtual) environment to remove all currently installed packages, then reinstall only the ones listed in `hooks/cloudflare/requirements.txt` using the above `pip install`.
+
+After installing/updating the dependencies, re-generate your certificate as before:
 
 ```
 $ (dehydrated_env) cd ~/cert_workspace
 $ (dehydrated_env) ./domaincert.sh
 ```
-
 
 ## Testing
 ### Unit Tests
@@ -225,6 +226,9 @@ $ ./dehydrated --register --accept-terms --ca letsencrypt-test
 ```
 $ ./dehydrated -c --ca letsencrypt-test --force --force-validation -d example.com -t dns-01 -k 'hooks/cloudflare/hook.py'
 ```
+
+## Compatibility
+Python 3 is required. We support Linux distributions with LTS designation and active public support (e.g., Ubuntu 20.04+, Debian 11+). If your system does not map python and pip to Python 3, you may need to use python3 and pip3 instead, or install python-is-python3 (on Ubuntu/Debian).
 
 ## Further reading
 If you want some prose to go with the code, check out the relevant blog post here: [From StartSSL to Let's Encrypt, using CloudFlare DNS](http://kappataumu.com/articles/letsencrypt-cloudflare-dns-01-hook.html).
