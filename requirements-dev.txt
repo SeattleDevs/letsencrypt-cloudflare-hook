@@ -1,0 +1,8 @@
+flake8==7.3.0
+mccabe==0.7.0
+mock==5.2.0
+pycodestyle==2.14.0
+pyflakes==3.4.0
+requests-mock==1.12.1
+six==1.17.0
+testtools==2.8.0

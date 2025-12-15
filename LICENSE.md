@@ -1,4 +1,4 @@
-Copyright (c) 2024 Yashar Fakhari
+Copyright (c) 2025 Yashar Fakhari
 Copyright (c) 2016 kappataumu
 
 Permission is hereby granted, free of charge, to any person obtaining

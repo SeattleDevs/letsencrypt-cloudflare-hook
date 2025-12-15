@@ -81,7 +81,7 @@ def _get_zone_id(domain):
         if r:
             return auth, r[0]['id']
     if 'CF_API_TOKEN' in os.environ:
-        logger.error(f"\033[91mERROR:\033[0m None of the provided API Tokens have the required permissions for the domain {tld}")
+        logger.error(f"\033[91mERROR:\033[0m None of the provided API tokens have the required permissions for the domain {tld}")
     else:
         logger.error(f"\033[91mERROR:\033[0m Domain {tld} not found in any Cloudflare account")
     sys.exit(1)
@@ -207,7 +207,7 @@ def main(argv):
         'exit_hook': exit_hook
     }
     if argv[0] in ops:
-        logger.info(" + CloudFlare hook executing: {0}".format(argv[0]))
+        logger.info(" + Cloudflare hook executing: {0}".format(argv[0]))
         ops[argv[0]](argv[1:])
 
 if __name__ == '__main__':
