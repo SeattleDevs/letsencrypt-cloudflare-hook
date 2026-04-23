@@ -1,4 +1,4 @@
-certifi==2026.2.25
+certifi==2026.4.22
 charset-normalizer==3.4.7
 dnspython==2.8.0
 idna==3.13
