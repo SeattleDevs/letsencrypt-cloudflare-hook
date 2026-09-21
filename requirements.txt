@@ -4,4 +4,4 @@ dnspython==2.8.0
 idna==3.20
 requests==2.34.2
 tld==0.13.2
-urllib3==2.7.0
+urllib3==2.8.0
