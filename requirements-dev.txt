@@ -1,4 +1,4 @@
-flake8==7.3.0
+flake8==7.4.1
 mccabe==0.7.0
 mock==5.2.0
 pycodestyle==2.14.0
